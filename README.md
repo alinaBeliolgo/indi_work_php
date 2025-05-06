@@ -2,8 +2,8 @@
 # Книжный каталог
 
 # Авторы
-**Belioglo Alina**
-**Certcov Vladislav**
+* **Belioglo Alina**
+* **Certcov Vladislav**
 
 ## Инструкции по запуску проекта
 1. Запустите встроенный сервер PHP: `php -S localhost:8080 -t public`
