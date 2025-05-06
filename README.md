@@ -71,7 +71,6 @@
 
 
 ## Документация 
-## Список использованных источников
 1. [Документация PHP](https://www.php.net/)
 2. [Руководство по PDO](https://www.php.net/manual/ru/book.pdo.php)
 3. [SQLite Documentation](https://www.sqlite.org/docs.html)
