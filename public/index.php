@@ -1,11 +1,14 @@
 <?php
 session_start();
+
 require_once '../config/db.php';
 
 $route = $_GET['route'] ?? 'index';
-$template = '../temp/layout.php';
+
+$template = '../template/layout.php';
 
 $publicRoutes = ['login', 'register', 'reset-password'];
+
 
 if (!empty($_SESSION['user']) && in_array($route, $publicRoutes)) {
     header('Location: index.php?route=index');
@@ -19,7 +22,7 @@ if (empty($_SESSION['user']) && !in_array($route, $publicRoutes)) {
 
 switch ($route) {
     case 'index':
-        $content = '../temp/index.php';
+        $content = '../template/index.php';
         break;
 
     case 'add':
@@ -28,11 +31,11 @@ switch ($route) {
             exit('Доступ запрещён');
         }
         require_once '../handlers/addBook.php';
-        $content = '../temp/add.php';
+        $content = '../template/add.php';
         break;
 
     case 'list':
-        $content = '../temp/list.php';
+        $content = '../template/list.php';
         break;
 
     case 'delete':
@@ -45,13 +48,13 @@ switch ($route) {
 
     case 'login':
         require_once '../handlers/login.php';
-        $content = '../temp/login.php';
+        $content = '../template/login.php';
         break;
 
 
     case 'register':
         require_once '../handlers/register.php';
-        $content = '../temp/register.php';
+        $content = '../template/register.php';
         break;
 
     case 'logout':
@@ -61,7 +64,7 @@ switch ($route) {
 
     default:
         http_response_code(404);
-        $content = '../temp/404.php';
+        $content = '../template/404.php';
         break;
 }
 
