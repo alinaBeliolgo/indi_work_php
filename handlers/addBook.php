@@ -7,32 +7,40 @@ require_once '../migration/01_category.php';
 require_once '../migration/02_books.php';
 
 
-
+//Проверка роли пользователя (только администратор может добавлять книги)
 if (!$_SESSION['role'] === 'admin') {
     header('HTTP/1.0 403 Forbidden');
     echo "Доступ запрещён. Только администраторы могут добавлять книги.";
     exit;
 }
 
-
+// Инициализация переменных
 $message = '';
 $title = $author = $description = '';
 $created_at = date('Y-m-d');
 $category_id = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Получение данных из формы
     $title = trim($_POST['title']);
     $author = trim($_POST['author']);
     $category_id = $_POST['category'];
     $description = trim($_POST['description']);
     $created_at = $_POST['created_at'];
 
+     // Проверка на заполненность всех полей
     if ($title === '' || $author === '' || $category_id === '' || $description === '' || $created_at === '') {
         $message = 'Пожалуйста, заполните все поля.';
+
+    // Проверка на допустимые символы в названии книги
     } elseif (!preg_match('/^[a-zA-ZА-Яа-я0-9\s]+$/u', $title)) {
         $message = 'Название книги содержит недопустимые символы.';
+
+    // Проверка корректности дат
     } elseif (!strtotime($created_at)) {
         $message = 'Некорректная дата.';
+
+    // Проверка на дублирование книги
     } else {
         $stmt = $pdo->prepare("
             SELECT COUNT(*) FROM books
@@ -43,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->fetchColumn() > 0) {
             $message = 'Книга с такими данными уже существует.';
         } else {
+            // Добавление книги в базу данных
             try {
                 $stmt = $pdo->prepare("
                     INSERT INTO books (title, author, category_id, description, created_at)

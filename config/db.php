@@ -1,6 +1,6 @@
 <?php
 
-
+// Подключение к базе данных SQLite
 $config = require_once __DIR__ . DIRECTORY_SEPARATOR . 'config.php';
 
 $dsn = $config['root'] . DIRECTORY_SEPARATOR .  $config['dsn'];
@@ -9,9 +9,11 @@ $driver = $config['driver'];
 
 
 try {
+    //подключения к базе данных с использованием PDO
     $pdo = new PDO($driver . $dsn);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+    // Создание таблиц при отсутствии
     $pdo->exec("CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT NOT NULL UNIQUE,
@@ -23,6 +25,7 @@ try {
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )");
 
+// Создание таблицы книг
     $pdo->exec("CREATE TABLE IF NOT EXISTS books (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,

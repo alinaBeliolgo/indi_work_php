@@ -1,3 +1,5 @@
+<!-- Шаьблон для добавления книги -->
+
 <h1>Добавить книгу</h1>
 
 <?php if ($message !== ''): ?>
@@ -23,6 +25,7 @@
         <select name="category" required>
             <option value="">Select...</option>
             <?php
+            // Получаем список категорий из базы данных
             $stmt = $pdo->query("SELECT id, name FROM categories");
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
                 <option value="<?= $row['id'] ?>"

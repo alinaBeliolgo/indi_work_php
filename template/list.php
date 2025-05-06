@@ -5,7 +5,7 @@ require_once '../config/db.php';
 
 $id = isset($_GET['id']) && is_numeric($_GET['id']) ? (int)$_GET['id'] : null;
 
-
+// Проверка корректности ID книги
 if (!$id || !is_numeric($id)) {
     echo "Некорректный ID книги.";
     exit;
@@ -13,12 +13,14 @@ if (!$id || !is_numeric($id)) {
 
 
 try {
+    // Подготовка SQL-запроса для получения информации о книге
     $stmt = $pdo->prepare("
         SELECT books.*, categories.name as category_name
         FROM books
         JOIN categories ON books.category_id = categories.id
         WHERE books.id = ?
     ");
+    // Выполнение запроса с передачей ID книги и результат в ассоциативный массив
     $stmt->execute([$id]);
     $book = $stmt->fetch(PDO::FETCH_ASSOC);
 
