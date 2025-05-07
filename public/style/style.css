@@ -52,7 +52,7 @@ main {
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
-    min-height: 65vh;
+    min-height: 100vh;
 }
 
 
@@ -130,4 +130,13 @@ input[type="text"], input[type="email"], input[type="password"], textarea {
 input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, textarea:focus {
     border-color: #6d5c46;
     outline: none;
+}
+
+.container_login{
+    height: 100vh;
+    text-align: center;
+}
+
+.form-group{
+    text-align: left;
 }

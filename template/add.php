@@ -29,8 +29,8 @@
             $stmt = $pdo->query("SELECT id, name FROM categories");
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
                 <option value="<?= $row['id'] ?>"
-                    <?= $row['id'] == $category_id ? 'selected' : '' ?>>
-                    <?= htmlspecialchars($row['name']) ?>
+                    <?php echo $row['id'] == $category_id ? 'selected' : '' ?>>
+                    <?php echo htmlspecialchars($row['name']) ?>
                 </option>
             <?php endwhile; ?>
         </select>

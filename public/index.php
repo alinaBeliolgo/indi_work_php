@@ -9,23 +9,26 @@ $route = $_GET['route'] ?? 'index';
 
 $template = '../template/layout.php';
 
-// Маршруты, доступные без авторизации
+// Маршруты, доступные без авторизации 
 $publicRoutes = ['login', 'register', 'reset-password'];
 
-// Если пользователь авторизован и пытается зайти на публичный маршрут, 
-// перенаправляем на главную
+// Если пользователь авторизован и пытается получить доступ к страницам, которые не требуют авторизации
 if (!empty($_SESSION['user']) && in_array($route, $publicRoutes)) {
     header('Location: index.php?route=index');
     exit;
 }
 
-// Если пользователь не авторизован и пытается зайти на закрытый маршрут, 
-// перенаправляем на страницу вход
+// Если пользователь не авторизован и пытается получить доступ к страницам, которые требуют авторизации
 if (empty($_SESSION['user']) && !in_array($route, $publicRoutes)) {
     header('Location: index.php?route=login');
     exit;
 }
 
+
+/**
+ * Обрабатывает маршруты приложения.
+ * @var string $route Маршрут, полученный из GET-параметра.
+ */
 switch ($route) {
     case 'index':
         $content = '../template/index.php';

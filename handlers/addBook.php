@@ -7,7 +7,10 @@ require_once '../migration/01_category.php';
 require_once '../migration/02_books.php';
 
 
-//Проверка роли пользователя (только администратор может добавлять книги)
+/**
+ * Проверяет роль пользователя.
+ * Только администратор может добавлять книги.
+ */
 if (!$_SESSION['role'] === 'admin') {
     header('HTTP/1.0 403 Forbidden');
     echo "Доступ запрещён. Только администраторы могут добавлять книги.";
@@ -21,7 +24,14 @@ $created_at = date('Y-m-d');
 $category_id = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Получение данных из формы
+    /**
+     * Получает данные из формы.
+     * @var string $title Название книги.
+     * @var string $author Автор книги.
+     * @var int $category_id ID категории книги.
+     * @var string $description Описание книги.
+     * @var string $created_at Дата создания книги.
+     */
     $title = trim($_POST['title']);
     $author = trim($_POST['author']);
     $category_id = $_POST['category'];
@@ -51,7 +61,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->fetchColumn() > 0) {
             $message = 'Книга с такими данными уже существует.';
         } else {
-            // Добавление книги в базу данных
+                /**
+                 * Выполняет добавление книги в базу данных.
+                 */
             try {
                 $stmt = $pdo->prepare("
                     INSERT INTO books (title, author, category_id, description, created_at)

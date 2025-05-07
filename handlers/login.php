@@ -5,11 +5,15 @@ require_once '../config/db.php';
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Получение данных из формы
+    /**
+     * Получает данные из формы авторизации.
+     */
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    //запрос для поиска пользователя по имени пользователя
+    /**
+     * Получает данные пользователя.
+     */
     $stmt = $pdo->prepare("SELECT id, username, password, role FROM users WHERE username = ?");
     $stmt->execute([$username]);
     $user = $stmt->fetch();
